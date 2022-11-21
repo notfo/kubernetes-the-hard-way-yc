@@ -29,25 +29,6 @@ If you are using the `yc` command-line tool for the first time `init` is the eas
 ```
 yc init
 ```
-Enter your OAuth token when prompted by the command.
-      ```
-      Please go to {{ link-cloud-oauth }}
-       in order to obtain OAuth token.
-
-      Please enter OAuth token: AaAaBbBbCcCcDdDdEeEeFfFfGgGg
-      ```
-At the command prompt, select one of the clouds from the list of those you have access to:
-
-      {% include [include](../_includes/cli/choose-cloud.md) %}
-
-      If only one cloud is available, it's selected automatically.
-Select the default folder:
-
-      {% include [include](../_includes/cli/choose-folder.md) %}
-
-      1. Select the default availability zone for {{ compute-full-name }}:
-
-      {% include [include](../_includes/cli/choose-zone.md) %}
 
  View your CLI profile settings:
       ```
