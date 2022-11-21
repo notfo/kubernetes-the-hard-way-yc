@@ -8,47 +8,52 @@ This tutorial leverages the [Google Cloud Platform](https://cloud.google.com/) t
 
 > The compute resources required for this tutorial exceed the Google Cloud Platform free tier.
 
-## Google Cloud Platform SDK
+## Yandex Cloud CLI
 
-### Install the Google Cloud SDK
+### Install the Yandex Cloud CLI
 
-Follow the Google Cloud SDK [documentation](https://cloud.google.com/sdk/) to install and configure the `gcloud` command line utility.
+Follow the Yandex Cloud CLI [documentation](https://cloud.yandex.com/en/docs/cli/quickstart) to install and configure the `yc` command line utility.
 
-Verify the Google Cloud SDK version is 338.0.0 or higher:
+Verify the Yandex Cloud CLI version is 0.98.0 or higher:
 
 ```
-gcloud version
+yc version
 ```
 
 ### Set a Default Compute Region and Zone
 
 This tutorial assumes a default compute region and zone have been configured.
 
-If you are using the `gcloud` command-line tool for the first time `init` is the easiest way to do this:
+If you are using the `yc` command-line tool for the first time `init` is the easiest way to do this:
 
 ```
-gcloud init
+yc init
 ```
+Enter your OAuth token when prompted by the command.
+      ```
+      Please go to {{ link-cloud-oauth }}
+       in order to obtain OAuth token.
 
-Then be sure to authorize gcloud to access the Cloud Platform with your Google user credentials:
+      Please enter OAuth token: AaAaBbBbCcCcDdDdEeEeFfFfGgGg
+      ```
+At the command prompt, select one of the clouds from the list of those you have access to:
 
-```
-gcloud auth login
-```
+      {% include [include](../_includes/cli/choose-cloud.md) %}
 
-Next set a default compute region and compute zone:
+      If only one cloud is available, it's selected automatically.
+Select the default folder:
 
-```
-gcloud config set compute/region us-west1
-```
+      {% include [include](../_includes/cli/choose-folder.md) %}
 
-Set a default compute zone:
+      1. Select the default availability zone for {{ compute-full-name }}:
 
-```
-gcloud config set compute/zone us-west1-c
-```
+      {% include [include](../_includes/cli/choose-zone.md) %}
 
-> Use the `gcloud compute zones list` command to view additional regions and zones.
+ View your CLI profile settings:
+      ```
+      yc config list
+      ```
+
 
 ## Running Commands in Parallel with tmux
 
