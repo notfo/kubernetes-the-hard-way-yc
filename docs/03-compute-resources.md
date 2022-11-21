@@ -110,7 +110,7 @@ for i in 0 1 2; do
     yc compute instance create controller-${i} \
       --labels kubernetes-the-hard-way=controller \
       --async \
-      --create-boot-disk image-family=ubuntu-2004-lts \
+      --create-boot-disk image-folder-id=standard-images,image-family=ubuntu-2004-lts \
       --network-interface subnet-name=kubernetes,ipv4-address=10.240.0.1${i},nat-ip-version=ipv4 \
       --zone ru-central1-b \
       --ssh-key ~/.ssh/id_ed25519.pub
