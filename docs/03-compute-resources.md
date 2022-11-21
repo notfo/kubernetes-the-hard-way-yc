@@ -17,7 +17,11 @@ In this section a dedicated [Virtual Private Cloud](https://cloud.google.com/com
 Create the `kubernetes-the-hard-way` custom VPC network:
 
 ```
-gcloud compute networks create kubernetes-the-hard-way --subnet-mode custom
+yc vpc network create \
+  --name kubernetes-the-hard-way \
+  --labels my-label=my-value \
+  --description "kubernetes the hard way test"
+
 ```
 
 A [subnet](https://cloud.google.com/compute/docs/vpc/#vpc_networks_and_subnets) must be provisioned with an IP address range large enough to assign a private IP address to each node in the Kubernetes cluster.
@@ -25,9 +29,12 @@ A [subnet](https://cloud.google.com/compute/docs/vpc/#vpc_networks_and_subnets) 
 Create the `kubernetes` subnet in the `kubernetes-the-hard-way` VPC network:
 
 ```
-gcloud compute networks subnets create kubernetes \
-  --network kubernetes-the-hard-way \
-  --range 10.240.0.0/24
+yc vpc subnet create \
+  --name kubernetes \
+  --zone ru-central1-b \
+  --range 10.240.0.0/24 \
+  --network-name kubernetes-the-hard-way \
+  --description "my kubernetes subnet via yc"
 ```
 
 > The `10.240.0.0/24` IP address range can host up to 254 compute instances.
@@ -100,18 +107,14 @@ Create three compute instances which will host the Kubernetes control plane:
 
 ```
 for i in 0 1 2; do
-  gcloud compute instances create controller-${i} \
-    --async \
-    --boot-disk-size 200GB \
-    --can-ip-forward \
-    --image-family ubuntu-2004-lts \
-    --image-project ubuntu-os-cloud \
-    --machine-type e2-standard-2 \
-    --private-network-ip 10.240.0.1${i} \
-    --scopes compute-rw,storage-ro,service-management,service-control,logging-write,monitoring \
-    --subnet kubernetes \
-    --tags kubernetes-the-hard-way,controller
-done
+    yc compute instance create controller-${i} \
+      --labels kubernetes-the-hard-way=controller \
+      --async \
+      --create-boot-disk image-family=ubuntu-2004-lts \
+      --network-interface subnet-name=kubernetes,ipv4-address=10.240.0.1${i},nat-ip-version=ipv4 \
+      --zone ru-central1-b \
+      --ssh-key ~/.ssh/id_ed25519.pub
+ done
 ```
 
 ### Kubernetes Workers
